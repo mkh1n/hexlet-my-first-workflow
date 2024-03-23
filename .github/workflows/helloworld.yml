@@ -6,5 +6,13 @@ jobs:
     build:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@main
+            - uses: actions/checkout@master
             - run: make say-hello
+            - name: Run Snyk to check for vulnerabilities
+              uses: snyk/actions/node@master
+              env:
+                SNYK_TOKEN: ${{ secrets.SNYK_KEY }}
+            - name: install node
+              uses: actions/setup-node@v4
+              with:
+                cache: 'npm'
